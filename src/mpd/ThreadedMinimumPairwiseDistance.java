@@ -31,7 +31,6 @@ public class ThreadedMinimumPairwiseDistance implements MinimumPairwiseDistance 
             }
         }
         return this.globalResult;
-        //throw new UnsupportedOperationException();
     }
 
     public void updateGlobalResult(long localResult){
@@ -69,7 +68,7 @@ public class ThreadedMinimumPairwiseDistance implements MinimumPairwiseDistance 
         public void run(){
             long result = Integer.MAX_VALUE;
             for (int i = values.length/2; i < values.length; ++i) {
-                for (int j = values.length/2; j < i; ++j) {
+                for (int j = 0; j < i - (values.length/2); ++j) {
                     // Gives us all the pairs (i, j) where 0 <= j < i < values.length
                     long diff = Math.abs(values[i] - values[j]);
                     if (diff < result) {
@@ -90,9 +89,9 @@ public class ThreadedMinimumPairwiseDistance implements MinimumPairwiseDistance 
         public void run(){
             long result = Integer.MAX_VALUE;
             for (int i = values.length/2; i < values.length; ++i) {
-                for (int j = values.length/2; j <= i; ++j) {
+                for (int j = i - (values.length/2); j < i; ++j) {
                     // Gives us all the pairs (i, j) where 0 <= j < i < values.length
-                    long diff = Math.abs(values[j] - values[i]);
+                    long diff = Math.abs(values[i] - values[j]);
                     if (diff < result) {
                         result = diff;
                     }
